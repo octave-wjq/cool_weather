@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.octave.coolweather.gson.Forecast;
 import com.example.octave.coolweather.gson.Weather;
+import com.example.octave.coolweather.service.AutoUpdateService;
 import com.example.octave.coolweather.util.HttpUtil;
 import com.example.octave.coolweather.util.Utility;
 
@@ -250,8 +251,8 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
-        /*Intent intent = new Intent(this, AutoUpdateService.class);
-        startService(intent);*/
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 
 }
