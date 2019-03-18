@@ -20,6 +20,7 @@ import com.example.octave.coolweather.R;
 import com.example.octave.coolweather.db.City;
 import com.example.octave.coolweather.db.County;
 import com.example.octave.coolweather.db.Province;
+import com.example.octave.coolweather.gson.Weather;
 import com.example.octave.coolweather.util.HttpUtil;
 import com.example.octave.coolweather.util.Utility;
 
@@ -93,10 +94,19 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 }else if(currentLevel == LEVEL_COUNTY){
                     String weatherid = countyList.get(position).getWeatherId();
-                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id",weatherid);
-                    startActivity(intent);
-                    getActivity().finish();
+                    if(getActivity() instanceof MainActivity){
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_id",weatherid);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else if(getActivity() instanceof WeatherActivity ){
+                        WeatherActivity activity = (WeatherActivity) getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipeRefresh.setRefreshing(true);
+                        activity.requestWeather(weatherid);
+
+                    }
+
                 }
             }
         });
